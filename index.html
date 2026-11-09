@@ -332,7 +332,8 @@
 
     .venue { background: var(--white); }
     .venue-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(40px, 8vw, 100px); align-items: center; }
-    .venue-name { margin: 0 0 8px; font-family: var(--tc); font-size: 1.45rem; font-weight: 300; letter-spacing: .1em; }
+    .venue-name { margin: 0 0 3px; font-family: var(--tc); font-size: 1.45rem; font-weight: 300; letter-spacing: .1em; }
+    .venue-hall { margin: 0 0 12px; color: var(--blue-deep); font-family: var(--serif); font-size: 1.25rem; font-style: italic; letter-spacing: .14em; }
     .venue-address { margin: 0 0 24px; color: var(--muted); font-size: .9rem; }
     .venue-detail { margin: 0 0 20px; color: var(--muted); font-size: .83rem; line-height: 2; }
     .venue-detail strong { display: block; margin-top: 13px; color: var(--ink); font-weight: 400; letter-spacing: .08em; }
@@ -340,7 +341,7 @@
     .outline-link:hover { background: var(--blue); color: var(--white); }
     .map-card { position: relative; min-height: 350px; display: grid; place-items: center; overflow: hidden; background: linear-gradient(145deg, #d7dee2, #b1bdc4); }
     .map-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 42%, rgba(255,255,255,.6) 42.2%, transparent 43%), linear-gradient(30deg, transparent 49%, rgba(255,255,255,.42) 49.3%, transparent 50%); opacity: .5; }
-    .map-card::after { content: "玄饌海鮮宴會館"; position: absolute; bottom: 24px; left: 24px; color: rgba(39,49,58,.58); font-size: .7rem; letter-spacing: .12em; }
+    .map-card::after { content: "玄饌海鮮宴會館・水饌廳"; position: absolute; bottom: 24px; left: 24px; color: rgba(39,49,58,.58); font-size: .7rem; letter-spacing: .12em; }
     .map-pin { position: relative; z-index: 1; display: grid; place-items: center; width: 54px; height: 54px; border: 1px solid var(--blue-deep); border-radius: 50% 50% 50% 0; color: var(--blue-deep); background: rgba(255,255,255,.48); transform: rotate(-45deg); }
     .map-pin span { font-family: var(--serif); font-size: 1.1rem; transform: rotate(45deg); }
 
@@ -352,6 +353,22 @@
     .timeline-dot { position: relative; z-index: 1; width: 11px; height: 11px; border: 2px solid var(--blue); border-radius: 50%; background: var(--paper); }
     .timeline-copy h3 { margin: 0; font-family: var(--tc); font-size: 1.05rem; font-weight: 300; letter-spacing: .1em; }
     .timeline-copy p { margin: 3px 0 0; color: var(--muted); font-size: .8rem; }
+    .time-summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(18px, 5vw, 58px);
+      max-width: 720px;
+      margin: 0 auto 52px;
+      padding: 24px 18px;
+      border-top: 1px solid rgba(100,119,137,.28);
+      border-bottom: 1px solid rgba(100,119,137,.28);
+      text-align: center;
+    }
+    .time-summary-item { display: grid; gap: 3px; }
+    .time-summary-time { color: var(--blue-deep); font-family: var(--serif); font-size: clamp(2rem, 5vw, 3.35rem); font-style: italic; line-height: 1; }
+    .time-summary-label { color: var(--muted); font-family: var(--tc); font-size: .8rem; letter-spacing: .14em; }
+    .time-summary-arrow { color: var(--blue); font-family: var(--serif); font-size: 1.5rem; }
 
     .dress { background: var(--paper-deep); text-align: center; }
     .dress-copy { max-width: 510px; margin: 0 auto 43px; }
@@ -441,6 +458,10 @@
       .timeline::before { left: 70px; }
       .timeline-item { grid-template-columns: 55px 30px 1fr; gap: 0 15px; }
       .timeline-time { font-size: 1.1rem; }
+      .time-summary { gap: 14px; margin-bottom: 42px; padding-inline: 8px; }
+      .time-summary-time { font-size: 2rem; }
+      .time-summary-label { font-size: .7rem; letter-spacing: .08em; }
+      .time-summary-arrow { font-size: 1.15rem; }
       .gallery-head { align-items: start; flex-direction: column; }
       .gallery-head .section-head { text-align: left; }
       .gallery-note { max-width: none; text-align: left; }
@@ -662,6 +683,7 @@
         <div class="venue-grid">
           <div class="reveal from-left">
             <h3 class="venue-name">玄饌海鮮宴會館</h3>
+            <p class="venue-hall">水饌廳</p>
             <p class="venue-address">臺南市安平區金城里<br />城平路 1 號</p>
             <div class="venue-detail">
               <strong>自行開車</strong>
@@ -684,6 +706,11 @@
           <p class="eyebrow">The Day</p>
           <h2 class="section-title">當天流程</h2>
           <div class="rule"><i></i><span>✦</span><i></i></div>
+        </div>
+        <div class="time-summary reveal" aria-label="婚禮重要時間">
+          <div class="time-summary-item"><span class="time-summary-time">11:30</span><span class="time-summary-label">入席</span></div>
+          <span class="time-summary-arrow" aria-hidden="true">→</span>
+          <div class="time-summary-item"><span class="time-summary-time">12:00</span><span class="time-summary-label">開席</span></div>
         </div>
         <div class="timeline">
           <div class="timeline-item reveal"><div class="timeline-time">11:30</div><div class="timeline-dot"></div><div class="timeline-copy"><h3>賓客入席</h3><p>歡迎您的到來，請入席就坐</p></div></div>
