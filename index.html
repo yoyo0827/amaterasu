@@ -212,6 +212,8 @@
     }
     .hero-content { position: relative; z-index: 2; }
     .hero-date {
+      position: relative;
+      z-index: 4;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -496,7 +498,7 @@
       --bow-left-tail-rotate: 0deg;
       --bow-right-tail-rotate: 0deg;
     }
-    .hero-content { z-index: 2; }
+    .hero-content { z-index: 4; }
     .hero-date {
       display: flex;
       margin-bottom: 28px;
@@ -521,9 +523,9 @@
     .hero-title span { animation-delay: 0s; }
     .bow {
       z-index: 3;
-      top: 31%;
-      width: min(78vw, 760px);
-      color: #8fa3b5;
+      top: 35%;
+      width: min(90vw, 900px);
+      aspect-ratio: 1754 / 897;
       opacity: var(--ribbon-opacity);
       pointer-events: none;
       transform: translate(-50%, var(--ribbon-y)) scale(var(--ribbon-scale));
@@ -531,20 +533,25 @@
       transition: transform .08s linear, opacity .08s linear;
       will-change: transform, opacity;
     }
-    .bow-art {
-      transform-box: fill-box;
-      transform-origin: center;
-      animation: ribbonFloat 7s ease-in-out 1.2s infinite;
-    }
-    .bow path {
-      transform-box: fill-box;
-      transform-origin: center;
+    .bow-image-piece {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
       transition: transform .08s linear;
+      will-change: transform;
     }
-    .bow-loop-left { transform: translateX(var(--bow-left-x)) rotate(var(--bow-left-rotate)); }
-    .bow-loop-right { transform: translateX(var(--bow-right-x)) rotate(var(--bow-right-rotate)); }
-    .bow-tail-left { transform: translateX(var(--bow-left-tail-x)) rotate(var(--bow-left-tail-rotate)); }
-    .bow-tail-right { transform: translateX(var(--bow-right-tail-x)) rotate(var(--bow-right-tail-rotate)); }
+    .bow-image-left {
+      clip-path: inset(0 50% 0 0);
+      transform: translateX(var(--bow-left-x)) rotate(var(--bow-left-rotate));
+      transform-origin: 100% 50%;
+    }
+    .bow-image-right {
+      clip-path: inset(0 0 0 50%);
+      transform: translateX(var(--bow-right-x)) rotate(var(--bow-right-rotate));
+      transform-origin: 0 50%;
+    }
     .photo-band {
       min-height: 42vh;
       background: #e9e0d5 !important;
@@ -560,7 +567,7 @@
       .hero { padding-inline: 15px; }
       .hero-date { margin-bottom: 22px; letter-spacing: .2em; }
       .hero-title { font-size: clamp(2rem, 10.5vw, 4.2rem); letter-spacing: .1em; }
-      .bow { top: 33%; width: 92vw; }
+      .bow { top: 37%; width: 92vw; }
       .site-nav .nav-links { margin-left: 0; }
     }
   </style>
@@ -651,14 +658,10 @@
           <span style="--delay:.95s">married</span>
         </h2>
       </div>
-      <svg class="bow" viewBox="0 0 700 380" aria-hidden="true">
-        <g class="bow-art">
-          <path class="bow-loop-left" pathLength="1" d="M350 195 C320 168 230 108 155 100 C85 93 55 138 78 174 C100 210 178 232 262 222 C308 215 344 202 350 195Z" />
-          <path class="bow-loop-right" pathLength="1" d="M350 195 C380 168 470 108 545 100 C615 93 645 138 622 174 C600 210 522 232 438 222 C392 215 356 202 350 195Z" />
-          <path class="bow-tail-left" pathLength="1" d="M350 195 C334 218 312 268 296 330" />
-          <path class="bow-tail-right" pathLength="1" d="M350 195 C366 218 388 268 404 330" />
-        </g>
-      </svg>
+      <div class="bow" aria-hidden="true">
+        <img class="bow-image-piece bow-image-left" src="images/ribbon-bow.png" alt="" />
+        <img class="bow-image-piece bow-image-right" src="images/ribbon-bow.png" alt="" />
+      </div>
       <div class="scroll-cue" aria-hidden="true"><span>scroll</span><i></i></div>
     </section>
 
