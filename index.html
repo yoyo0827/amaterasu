@@ -1053,7 +1053,9 @@
       if (!needsPaperInvite) guestAddress.value = "";
     };
     rsvpForm.querySelectorAll("input[name='entry.1639911003']").forEach(input => input.addEventListener("change", syncAttendanceCount));
-    paperInviteYes.addEventListener("change", syncAddressField);
+    rsvpForm.addEventListener("change", event => {
+      if (event.target.matches("input[name='entry.1617913882']")) syncAddressField();
+    });
     syncAddressField();
     rsvpForm.addEventListener("submit", () => {
       guestCountEntry.value = guestCount.value;
