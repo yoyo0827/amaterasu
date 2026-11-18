@@ -432,8 +432,9 @@
     .choice input:checked + label { border-color: var(--blue); color: var(--white); background: var(--blue); }
     .choice input:focus-visible + label { outline: 2px solid var(--blue-deep); outline-offset: 2px; }
     .select-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
-    .address-field { overflow: hidden; max-height: 0; margin: 0; opacity: 0; transition: max-height .4s, opacity .4s, margin .4s; }
-    .address-field.is-visible { max-height: 100px; margin-top: 12px; opacity: 1; }
+    .address-field { overflow: hidden; max-height: 0; margin: 0; opacity: 0; visibility: hidden; pointer-events: none; transition: max-height .4s, opacity .4s, margin .4s, visibility .4s; }
+    .address-field.is-visible { max-height: 180px; margin: 12px 0 24px; opacity: 1; visibility: visible; pointer-events: auto; }
+    .field-hint { display: block; margin-top: 6px; color: var(--muted); font-size: .72rem; line-height: 1.6; }
     .submit-button { width: 100%; border: 1px solid var(--blue-deep); padding: 13px; color: var(--white); background: var(--blue-deep); cursor: pointer; font-size: .7rem; letter-spacing: .25em; transition: background .3s, color .3s; }
     .submit-button:hover:not(:disabled) { color: var(--blue-deep); background: transparent; }
     .submit-button:disabled { cursor: wait; opacity: .55; }
@@ -848,6 +849,12 @@
             </div>
           </fieldset>
 
+          <div class="field address-field" id="addressField" aria-hidden="true">
+            <label class="field-label" for="guestAddress">紙本喜帖寄送地址 <span aria-hidden="true">*</span></label>
+            <input class="input" id="guestAddress" name="entry.2013797384" type="text" autocomplete="street-address" maxlength="250" disabled />
+            <small class="field-hint">選擇需要紙本喜帖時，請填寫完整收件地址。</small>
+          </div>
+
           <div class="field">
             <label class="field-label" for="guestMessage">留言 <span style="letter-spacing:0">（選填）</span></label>
             <textarea class="textarea" id="guestMessage" name="entry.279393895" maxlength="1000"></textarea>
@@ -1019,6 +1026,9 @@
     const attendanceNo = $("#attendanceNo");
     const guestCount = $("#guestCount");
     const guestCountEntry = $("#guestCountEntry");
+    const paperInviteYes = $("#paperInviteYes");
+    const addressField = $("#addressField");
+    const guestAddress = $("#guestAddress");
     let rsvpPending = false;
     let rsvpTimeout;
     const showRsvpMessage = (message, kind) => {
@@ -1034,7 +1044,17 @@
         if (guestCount.value === "0") guestCount.value = "";
       }
     };
-    $$("input[name='entry.1639911003']", rsvpForm).forEach(input => input.addEventListener("change", syncAttendanceCount));
+    const syncAddressField = () => {
+      const needsPaperInvite = paperInviteYes.checked;
+      addressField.classList.toggle("is-visible", needsPaperInvite);
+      addressField.setAttribute("aria-hidden", String(!needsPaperInvite));
+      guestAddress.disabled = !needsPaperInvite;
+      guestAddress.required = needsPaperInvite;
+      if (!needsPaperInvite) guestAddress.value = "";
+    };
+    $("input[name='entry.1639911003']", rsvpForm).forEach(input => input.addEventListener("change", syncAttendanceCount));
+    $("input[name='entry.1617913882']", rsvpForm).forEach(input => input.addEventListener("change", syncAddressField));
+    syncAddressField();
     rsvpForm.addEventListener("submit", () => {
       guestCountEntry.value = guestCount.value;
       rsvpPending = true;
@@ -1055,6 +1075,7 @@
       rsvpSubmit.disabled = false;
       rsvpForm.reset();
       syncAttendanceCount();
+      syncAddressField();
       showRsvpMessage("回覆已送出，謝謝你！", "success");
     });
 
