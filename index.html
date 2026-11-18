@@ -388,6 +388,9 @@
     .rsvp { background: var(--paper-deep); }
     .rsvp .section-inner { max-width: 680px; }
     .rsvp-note { max-width: 500px; margin: 0 auto 40px; color: var(--muted); font-family: var(--tc); font-size: .88rem; line-height: 2; text-align: center; }
+    .google-form-embed { display: block; width: 100%; height: 1120px; border: 0; background: transparent; }
+    .rsvp-fallback { margin: 12px 0 0; color: var(--muted); font-size: .78rem; text-align: center; }
+    .rsvp-fallback a { color: var(--blue-deep); text-underline-offset: 4px; }
     .rsvp-form { padding: clamp(24px, 6vw, 54px); border: 1px solid rgba(39,49,58,.16); background: rgba(255,253,249,.45); }
     .field { margin-bottom: 24px; }
     .field-label { display: block; margin-bottom: 8px; color: var(--ink); font-size: .68rem; letter-spacing: .16em; }
@@ -485,7 +488,9 @@
       min-height: 100svh;
       isolation: isolate;
       padding: 45px 24px 70px;
-      background: #f4efe8;
+      background:
+        linear-gradient(rgba(244,239,232,.2), rgba(244,239,232,.08) 58%, rgba(39,49,58,.14)),
+        url("images/IMG_8465.jpeg") center 58% / cover no-repeat;
       --ribbon-scale: 1;
       --ribbon-y: -47%;
       --ribbon-opacity: .78;
@@ -497,6 +502,14 @@
       --bow-right-tail-x: 0px;
       --bow-left-tail-rotate: 0deg;
       --bow-right-tail-rotate: 0deg;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(244,239,232,.12), transparent 52%, rgba(39,49,58,.12));
+      pointer-events: none;
     }
     .hero-content { z-index: 4; }
     .hero-date {
@@ -554,12 +567,12 @@
     }
     .photo-band {
       min-height: 42vh;
-      background: #e9e0d5 !important;
-      color: #647789;
+      background: url("images/IMG_8464.jpeg") center 53% / cover no-repeat;
+      color: var(--white);
     }
-    .photo-band::before { display: none; }
-    .photo-band::after { border-color: rgba(100,119,137,.28); }
-    .countdown { color: #647789; }
+    .photo-band::before { display: block; background: rgba(31,38,42,.34); }
+    .photo-band::after { border-color: rgba(255,255,255,.46); }
+    .countdown { color: var(--white); }
     .count-label { opacity: .72; }
     .timeline-copy h3 { letter-spacing: .16em; }
     .timeline-copy p { max-width: 420px; }
@@ -569,54 +582,33 @@
       .hero-title { font-size: clamp(2rem, 10.5vw, 4.2rem); letter-spacing: .1em; }
       .bow { top: 37%; width: 92vw; }
       .site-nav .nav-links { margin-left: 0; }
+      .google-form-embed { height: 1290px; }
     }
   </style>
 </head>
 
 <body>
-  <!--
-    Google Form 設定：
-    1. 開啟 Google 表單，按「取得預填連結」或查看表單 HTML。
-    2. 將表單網址的 /viewform 改成 /formResponse。
-    3. 對每一題找到 name="entry.xxxxx"，填入下方 FORM_CONFIG.entries。
-    4. 出席、紙本喜帖的 value 必須與 Google 表單選項文字完全相同。
-    尚未填寫時，網站會保留在示範模式，不會假裝資料已送出。
-  -->
   <script>
-    const FORM_CONFIG = {
-      action: "https://docs.google.com/forms/d/e/你的表單ID/formResponse",
-      entries: {
-        attendance: "entry.出席欄位ID",
-        name: "entry.姓名欄位ID",
-        adults: "entry.大人欄位ID",
-        children: "entry.小孩欄位ID",
-        vegetarian: "entry.素食欄位ID",
-        paperInvitation: "entry.紙本喜帖欄位ID",
-        address: "entry.地址欄位ID",
-        message: "entry.留言欄位ID"
-      }
-    };
-
-    // 婚紗照已放在 outputs/images；部署到 GitHub Pages 時，請連同 images 資料夾一起上傳。
+    // 兩張橫幅照作為背景，其餘照片放入 Engagement Photos。
     const PHOTO_URLS = [
-      "images/photo-01.jpg",
-      "images/photo-02.jpg",
-      "images/photo-06.jpg",
-      "images/photo-07.jpg",
-      "images/photo-08.jpg",
-      "images/photo-09.jpg",
-      "images/photo-10.jpg",
-      "images/photo-13.jpg",
-      "images/photo-14.jpg",
-      "images/photo-15.jpg",
-      "images/photo-16.jpg",
-      "images/photo-21.jpg",
-      "images/photo-23.jpg",
-      "images/photo-24.jpg",
-      "images/photo-25.jpg",
-      "images/photo-29.jpg",
-      "images/photo-30.jpg",
-      "images/photo-31.jpg"
+      "images/IMG_8445.jpeg",
+      "images/IMG_8446.jpeg",
+      "images/IMG_8447.jpeg",
+      "images/IMG_8448.jpeg",
+      "images/IMG_8449.jpeg",
+      "images/IMG_8450.jpeg",
+      "images/IMG_8451.jpeg",
+      "images/IMG_8452.jpeg",
+      "images/IMG_8453.jpeg",
+      "images/IMG_8454.jpeg",
+      "images/IMG_8455.jpeg",
+      "images/IMG_8456.jpeg",
+      "images/IMG_8457.jpeg",
+      "images/IMG_8458.jpeg",
+      "images/IMG_8459.jpeg",
+      "images/IMG_8460.jpeg",
+      "images/IMG_8461.jpeg",
+      "images/IMG_8463.jpeg"
     ];
 
     const WEDDING_DATE = "2027-03-20T12:00:00+08:00";
@@ -665,7 +657,7 @@
       <div class="scroll-cue" aria-hidden="true"><span>scroll</span><i></i></div>
     </section>
 
-    <div class="photo-band" id="countdownBand">
+    <div class="photo-band" id="countdownBand" aria-label="婚禮倒數照片">
       <div class="countdown" aria-label="婚禮倒數">
         <div class="count-unit"><span class="count-number" id="days">--</span><span class="count-label">Days</span></div>
         <div class="count-unit"><span class="count-number" id="hours">--</span><span class="count-label">Hours</span></div>
@@ -764,11 +756,11 @@
       <div class="section-inner">
         <div class="gallery-head reveal">
           <div class="section-head">
-            <p class="eyebrow">Our Moments</p>
+            <p class="eyebrow">Engagement Photos</p>
             <h2 class="section-title">婚紗照片</h2>
             <div class="rule"><i></i><span>✦</span><i></i></div>
           </div>
-          <p class="gallery-note">點擊照片可以放大瀏覽<br />把我們的日常分享給你</p>
+          <p class="gallery-note">點擊照片可以放大瀏覽<br />把這些相遇與日常分享給你</p>
         </div>
         <div class="gallery-grid" id="galleryGrid"></div>
       </div>
@@ -783,46 +775,13 @@
         </div>
         <p class="rsvp-note reveal">請於 <strong>2027 年 2 月 20 日</strong> 前完成回覆，讓我們為你準備最剛好的座位與餐點。謝謝你願意來到我們的重要日子。</p>
 
-        <form class="rsvp-form reveal" id="rsvpForm">
-          <div class="field">
-            <span class="field-label">是否出席</span>
-            <div class="choice-row">
-              <div class="choice"><input id="attendYes" type="radio" name="attendance" value="出席" required /><label for="attendYes">✓ 出席</label></div>
-              <div class="choice"><input id="attendNo" type="radio" name="attendance" value="無法出席" /><label for="attendNo">✕ 無法出席</label></div>
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="guestName">姓名</label>
-            <input class="input" id="guestName" name="name" type="text" placeholder="請填寫您的姓名" autocomplete="name" required />
-          </div>
-
-          <div class="field">
-            <span class="field-label">出席人數</span>
-            <div class="select-row">
-              <div class="field"><label class="field-label" for="adults">大人</label><select class="select" id="adults" name="adults"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
-              <div class="field"><label class="field-label" for="children">小孩</label><select class="select" id="children" name="children"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-              <div class="field"><label class="field-label" for="vegetarian">素食</label><select class="select" id="vegetarian" name="vegetarian"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-            </div>
-          </div>
-
-          <div class="field">
-            <span class="field-label">是否需要紙本喜帖</span>
-            <div class="choice-row">
-              <div class="choice"><input id="paperYes" type="radio" name="paperInvitation" value="是，需要" /><label for="paperYes">是，需要</label></div>
-              <div class="choice"><input id="paperNo" type="radio" name="paperInvitation" value="否，謝謝" checked /><label for="paperNo">否，謝謝</label></div>
-            </div>
-            <div class="address-field" id="addressField"><input class="input" id="address" name="address" type="text" placeholder="收件地址（含郵遞區號）" autocomplete="street-address" /></div>
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="message">留言給新人（選填）</label>
-            <textarea class="textarea" id="message" name="message" placeholder="寫下您的祝福…"></textarea>
-          </div>
-
-          <button class="submit-button" id="submitButton" type="submit">送出回覆</button>
-          <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
-        </form>
+        <iframe
+          class="google-form-embed reveal"
+          title="冠佑與頤昕婚禮出席回覆表單"
+          src="https://docs.google.com/forms/d/e/1FAIpQLSeIyhm6-uqfvzfQV-Q-MwAjjD07-MJhRa3h5j4zuZwaIcqRjA/viewform?embedded=true"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin">載入 RSVP 表單中…</iframe>
+        <p class="rsvp-fallback">表單若未載入，<a href="https://docs.google.com/forms/d/e/1FAIpQLSeIyhm6-uqfvzfQV-Q-MwAjjD07-MJhRa3h5j4zuZwaIcqRjA/viewform" target="_blank" rel="noopener">請點此開啟</a></p>
       </div>
     </section>
   </main>
@@ -963,63 +922,6 @@
       if (event.key === "ArrowRight") moveLightbox(1);
     });
 
-    // 紙本喜帖地址欄位
-    $$("input[name='paperInvitation']").forEach(radio => radio.addEventListener("change", () => {
-      $("#addressField").classList.toggle("is-visible", $("#paperYes").checked);
-    }));
-
-    // Google Form 提交
-    const isFormConfigured = () => {
-      const invalid = [FORM_CONFIG.action, ...Object.values(FORM_CONFIG.entries)].some(value => !value || /你的|欄位ID|FORM_ID/.test(value));
-      return !invalid;
-    };
-    const showFormMessage = (type, text) => {
-      const message = $("#formMessage");
-      message.className = `form-message is-visible ${type}`;
-      message.textContent = text;
-    };
-    $("#rsvpForm").addEventListener("submit", async event => {
-      event.preventDefault();
-      const form = event.currentTarget;
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-      if (!isFormConfigured()) {
-        showFormMessage("info", "目前是示範模式：請先在檔案上方填入 Google Form action 與各題的 entry ID，才會真的寫入表單。 ");
-        return;
-      }
-
-      const button = $("#submitButton");
-      button.disabled = true;
-      button.textContent = "送出中…";
-      showFormMessage("info", "正在送出，請稍候…");
-
-      const data = new FormData();
-      const value = name => form.elements[name]?.value?.trim?.() ?? form.elements[name]?.value ?? "";
-      data.append(FORM_CONFIG.entries.attendance, value("attendance"));
-      data.append(FORM_CONFIG.entries.name, value("name"));
-      data.append(FORM_CONFIG.entries.adults, value("adults"));
-      data.append(FORM_CONFIG.entries.children, value("children"));
-      data.append(FORM_CONFIG.entries.vegetarian, value("vegetarian"));
-      data.append(FORM_CONFIG.entries.paperInvitation, value("paperInvitation"));
-      data.append(FORM_CONFIG.entries.address, value("address"));
-      data.append(FORM_CONFIG.entries.message, value("message"));
-
-      try {
-        // Google Form 允許 no-cors 的表單 POST；瀏覽器拿不到回應內容，因此以請求完成作為成功訊號。
-        await fetch(FORM_CONFIG.action, { method: "POST", mode: "no-cors", body: data });
-        showFormMessage("success", "感謝您的回覆！我們期待在婚禮當天與您相聚 ♡");
-        form.reset();
-        $("#addressField").classList.remove("is-visible");
-      } catch (error) {
-        console.error(error);
-        showFormMessage("error", "送出失敗，請稍後再試，或直接聯繫我們確認。 ");
-      } finally {
-        button.disabled = false;
-        button.textContent = "送出回覆";
-      }
-    });
   </script>
 </body>
 </html>
