@@ -311,18 +311,23 @@
     .section-inner { width: min(100%, 950px); margin: 0 auto; }
     .section-head { margin-bottom: 54px; text-align: center; }
     .eyebrow { margin: 0 0 10px; color: var(--blue-deep); font-family: var(--serif); font-size: 1.4rem; font-style: italic; letter-spacing: .12em; }
-    .section-title { margin: 0; font-family: var(--tc); font-size: clamp(1.7rem, 4vw, 2.8rem); font-weight: 200; letter-spacing: .2em; line-height: 1.5; }
+    .section-title { margin: 0; font-family: var(--serif); font-size: clamp(1.9rem, 5vw, 3.35rem); font-style: italic; font-weight: 300; letter-spacing: .08em; line-height: 1.2; }
     .rule { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 21px; color: var(--blue); }
     .rule i { width: 52px; height: 1px; background: currentColor; opacity: .5; }
     .rule span { font-family: var(--serif); font-size: 1.1rem; }
     .copy { color: var(--muted); font-family: var(--tc); font-size: .91rem; line-height: 2.2; }
 
     .story { background: var(--paper-deep); }
-    .couple-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 30px; }
-    .person { padding: 25px; text-align: center; }
+    .couple-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 30px; }
+    .person { padding: 18px; text-align: center; }
+    .person-frame { position: relative; width: min(100%, 300px); aspect-ratio: 4 / 5; margin: 0 auto 25px; border: 1px solid rgba(100,119,137,.38); padding: 10px; background: var(--white); box-shadow: 0 16px 38px rgba(39,49,58,.13); }
+    .person-frame::after { content: ""; position: absolute; inset: 6px; border: 1px solid rgba(100,119,137,.22); pointer-events: none; }
+    .person-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+    .person.from-left .person-frame { transform: rotate(-1.2deg); }
+    .person.from-right .person-frame { transform: rotate(1.2deg); }
     .person-role { color: var(--blue-deep); font-family: var(--serif); font-size: 1.1rem; font-style: italic; letter-spacing: .16em; }
-    .person-name { margin: 7px 0 18px; font-family: var(--tc); font-size: 1.35rem; font-weight: 300; letter-spacing: .22em; }
-    .person .copy { margin: 0; }
+    .person-name { margin: 7px 0 14px; font-family: var(--serif); font-size: 1.7rem; font-style: italic; font-weight: 400; letter-spacing: .08em; }
+    .person .copy { max-width: 330px; margin: 0 auto; color: var(--muted); font-family: var(--serif); font-size: 1.25rem; font-style: italic; line-height: 1.75; }
     .heart { color: var(--blue); font-family: var(--serif); font-size: 4rem; font-weight: 300; opacity: .65; }
 
     .venue { background: var(--white); }
@@ -474,6 +479,9 @@
       .nav-links a { font-size: .8rem; }
       section { padding: 84px 20px; }
       .couple-grid, .venue-grid { grid-template-columns: 1fr; gap: 10px; }
+      .couple-grid { gap: 18px; }
+      .person { padding: 10px 0; }
+      .person-frame { width: min(72vw, 280px); }
       .heart { line-height: .5; }
       .map-card { min-height: 270px; }
       .timeline::before { left: 70px; }
@@ -693,20 +701,22 @@
       <div class="section-inner">
         <div class="section-head reveal">
           <p class="eyebrow">Our Story</p>
-          <h2 class="section-title">新郎 &amp; 新娘</h2>
+          <h2 class="section-title">The Two of Us</h2>
           <div class="rule"><i></i><span>✦</span><i></i></div>
         </div>
         <div class="couple-grid">
           <article class="person reveal from-left">
+            <div class="person-frame"><img class="person-photo" src="images/profile-groom.jpg" alt="Guanyou in a black suit among the trees" loading="lazy" /></div>
             <div class="person-role">Groom</div>
-            <h3 class="person-name">陳冠佑</h3>
-            <p class="copy">喜歡研究生活裡的小事，<br />也喜歡把平凡的日子過成值得收藏的回憶。</p>
+            <h3 class="person-name">Guanyou Chen</h3>
+            <p class="copy">Still noticing the good in the quiet moments.</p>
           </article>
           <div class="heart reveal">♡</div>
           <article class="person reveal from-right">
+            <div class="person-frame"><img class="person-photo" src="images/profile-bride.jpg" alt="Yixin in her wedding dress with a bouquet" loading="lazy" /></div>
             <div class="person-role">Bride</div>
-            <h3 class="person-name">楊頤昕</h3>
-            <p class="copy">喜歡花、旅行與溫柔的日常，<br />最喜歡的風景，是身邊剛好有你。</p>
+            <h3 class="person-name">Yixin Yang</h3>
+            <p class="copy">I love flowers, faraway places, and the quiet warmth of everyday life. My favorite view is any moment with you by my side.</p>
           </article>
         </div>
       </div>
@@ -715,8 +725,7 @@
     <section class="venue" id="venue">
       <div class="section-inner">
         <div class="section-head reveal">
-          <p class="eyebrow">Location</p>
-          <h2 class="section-title">婚禮地點</h2>
+          <h2 class="section-title">Location</h2>
           <div class="rule"><i></i><span>✦</span><i></i></div>
         </div>
         <div class="venue-grid">
@@ -742,8 +751,7 @@
     <section class="schedule" id="schedule">
       <div class="section-inner">
         <div class="section-head reveal">
-          <p class="eyebrow">The Day</p>
-          <h2 class="section-title">當天流程</h2>
+          <h2 class="section-title">The Day</h2>
           <div class="rule"><i></i><span>✦</span><i></i></div>
         </div>
         <div class="time-summary reveal" aria-label="婚禮重要時間">
@@ -762,8 +770,7 @@
     <section class="dress" id="dresscode">
       <div class="section-inner">
         <div class="section-head reveal">
-          <p class="eyebrow">Dress Code</p>
-          <h2 class="section-title">穿著建議</h2>
+          <h2 class="section-title">Dress Code</h2>
           <div class="rule"><i></i><span>✦</span><i></i></div>
         </div>
         <p class="dress-copy copy reveal">歡迎你以白色、咖啡色或淺藍色系穿著出席，讓我們一起留下柔和、明亮又溫暖的婚禮記憶。當然，穿自己最自在的樣子也很好。</p>
@@ -779,8 +786,7 @@
       <div class="section-inner">
         <div class="gallery-head reveal">
           <div class="section-head">
-            <p class="eyebrow">Engagement Photos</p>
-            <h2 class="section-title">婚紗照片</h2>
+            <h2 class="section-title">Engagement Photos</h2>
             <div class="rule"><i></i><span>✦</span><i></i></div>
           </div>
           <p class="gallery-note">收下一些我們喜歡的日常<br />點開照片，可以慢慢看</p>
