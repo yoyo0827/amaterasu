@@ -383,19 +383,41 @@
     .gallery-item::after { content: "＋"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--white); font-family: var(--serif); font-size: 2rem; background: rgba(39,49,58,.28); opacity: 0; transition: opacity .4s; }
     .gallery-item:hover img { transform: scale(1.06); filter: saturate(.8); }
     .gallery-item:hover::after { opacity: 1; }
+    .gallery-extra[hidden] { display: none; }
+    .gallery-extra:not([hidden]) { margin-top: 9px; }
+    .gallery-more-wrap { display: flex; justify-content: center; margin-top: 36px; }
+    .gallery-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      border: 0;
+      border-bottom: 1px solid rgba(100,119,137,.55);
+      padding: 8px 2px 7px 8px;
+      color: var(--blue-deep);
+      background: transparent;
+      cursor: pointer;
+      font-family: var(--serif);
+      font-size: .9rem;
+      letter-spacing: .3em;
+      transition: color .25s, border-color .25s;
+    }
+    .gallery-more:hover { color: var(--ink); border-color: var(--ink); }
+    .gallery-more-mark { font-family: var(--sans); font-size: .95rem; letter-spacing: 0; }
     .photo-placeholder { display: grid; place-items: center; height: 100%; padding: 20px; color: var(--blue-deep); font-family: var(--serif); font-size: 1.2rem; letter-spacing: .08em; }
 
     .rsvp { background: var(--paper-deep); }
     .rsvp .section-inner { max-width: 680px; }
     .rsvp-note { max-width: 500px; margin: 0 auto 40px; color: var(--muted); font-family: var(--tc); font-size: .88rem; line-height: 2; text-align: center; }
-    .google-form-embed { display: block; width: 100%; height: 1120px; border: 0; background: transparent; }
     .rsvp-fallback { margin: 12px 0 0; color: var(--muted); font-size: .78rem; text-align: center; }
     .rsvp-fallback a { color: var(--blue-deep); text-underline-offset: 4px; }
     .rsvp-form { padding: clamp(24px, 6vw, 54px); border: 1px solid rgba(39,49,58,.16); background: rgba(255,253,249,.45); }
+    .choice-fieldset { min-width: 0; margin: 0 0 24px; border: 0; padding: 0; }
+    .choice-fieldset legend { width: 100%; }
     .field { margin-bottom: 24px; }
     .field-label { display: block; margin-bottom: 8px; color: var(--ink); font-size: .68rem; letter-spacing: .16em; }
     .input, .select, .textarea { width: 100%; border: 1px solid rgba(39,49,58,.2); border-radius: 0; padding: 12px 14px; color: var(--ink); background: rgba(255,255,255,.68); outline: none; font-size: .86rem; transition: border-color .25s, box-shadow .25s; }
     .input:focus, .select:focus, .textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(135,152,170,.16); }
+    .select:disabled { cursor: not-allowed; opacity: .62; }
     .textarea { min-height: 116px; resize: vertical; }
     .choice-row { display: flex; flex-wrap: wrap; gap: 8px; }
     .choice { flex: 1 1 140px; position: relative; }
@@ -403,6 +425,7 @@
     .choice label { display: block; border: 1px solid rgba(39,49,58,.2); padding: 11px 13px; color: var(--muted); background: rgba(255,255,255,.68); cursor: pointer; font-size: .84rem; text-align: center; transition: color .25s, border-color .25s, background .25s; }
     .choice label:hover { border-color: var(--blue); }
     .choice input:checked + label { border-color: var(--blue); color: var(--white); background: var(--blue); }
+    .choice input:focus-visible + label { outline: 2px solid var(--blue-deep); outline-offset: 2px; }
     .select-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
     .address-field { overflow: hidden; max-height: 0; margin: 0; opacity: 0; transition: max-height .4s, opacity .4s, margin .4s; }
     .address-field.is-visible { max-height: 100px; margin-top: 12px; opacity: 1; }
@@ -414,6 +437,7 @@
     .form-message.success { color: #45634f; border: 1px solid rgba(69,99,79,.28); background: rgba(120,164,130,.1); }
     .form-message.error { color: #8b4b4b; border: 1px solid rgba(139,75,75,.25); background: rgba(180,90,90,.08); }
     .form-message.info { color: var(--blue-deep); border: 1px solid rgba(100,119,137,.28); background: rgba(135,152,170,.1); }
+    .rsvp-response-frame { position: absolute; width: 1px; height: 1px; border: 0; opacity: 0; pointer-events: none; }
 
     footer { padding: 85px 24px 70px; color: rgba(255,255,255,.75); background: var(--ink); text-align: center; }
     .footer-date { margin: 18px 0 26px; color: var(--blue-pale); font-family: var(--serif); font-size: 1rem; font-style: italic; letter-spacing: .28em; }
@@ -582,7 +606,6 @@
       .hero-title { font-size: clamp(2rem, 10.5vw, 4.2rem); letter-spacing: .1em; }
       .bow { top: 37%; width: 92vw; }
       .site-nav .nav-links { margin-left: 0; }
-      .google-form-embed { height: 1290px; }
     }
   </style>
 </head>
@@ -760,9 +783,15 @@
             <h2 class="section-title">婚紗照片</h2>
             <div class="rule"><i></i><span>✦</span><i></i></div>
           </div>
-          <p class="gallery-note">點擊照片可以放大瀏覽<br />把這些相遇與日常分享給你</p>
+          <p class="gallery-note">收下一些我們喜歡的日常<br />點開照片，可以慢慢看</p>
         </div>
-        <div class="gallery-grid" id="galleryGrid"></div>
+        <div class="gallery-grid gallery-preview" id="galleryGrid"></div>
+        <div class="gallery-grid gallery-extra" id="galleryExtra" hidden></div>
+        <div class="gallery-more-wrap">
+          <button class="gallery-more" id="galleryMore" type="button" aria-expanded="false" aria-controls="galleryExtra" aria-label="展開婚紗照片">
+            <span class="gallery-more-label">MORE</span><span class="gallery-more-mark" aria-hidden="true">＋</span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -775,13 +804,54 @@
         </div>
         <p class="rsvp-note reveal">請於 <strong>2027 年 2 月 20 日</strong> 前完成回覆，讓我們為你準備最剛好的座位與餐點。謝謝你願意來到我們的重要日子。</p>
 
-        <iframe
-          class="google-form-embed reveal"
-          title="冠佑與頤昕婚禮出席回覆表單"
-          src="https://docs.google.com/forms/d/e/1FAIpQLSeIyhm6-uqfvzfQV-Q-MwAjjD07-MJhRa3h5j4zuZwaIcqRjA/viewform?embedded=true"
-          loading="lazy"
-          referrerpolicy="strict-origin-when-cross-origin">載入 RSVP 表單中…</iframe>
-        <p class="rsvp-fallback">表單若未載入，<a href="https://docs.google.com/forms/d/e/1FAIpQLSeIyhm6-uqfvzfQV-Q-MwAjjD07-MJhRa3h5j4zuZwaIcqRjA/viewform" target="_blank" rel="noopener">請點此開啟</a></p>
+        <form class="rsvp-form reveal" id="rsvpForm" action="https://docs.google.com/forms/d/e/1FAIpQLSeIyhm6-uqfvzfQV-Q-MwAjjD07-MJhRa3h5j4zuZwaIcqRjA/formResponse" method="post" target="rsvpResponse" accept-charset="UTF-8">
+          <input type="hidden" name="entry.1639911003_sentinel" value="" />
+          <input type="hidden" name="entry.1617913882_sentinel" value="" />
+          <input type="hidden" name="fvv" value="1" />
+          <input type="hidden" name="pageHistory" value="0" />
+
+          <fieldset class="choice-fieldset">
+            <legend class="field-label">是否參加 <span aria-hidden="true">*</span></legend>
+            <div class="choice-row">
+              <div class="choice"><input id="attendanceYes" type="radio" name="entry.1639911003" value="出席" required /><label for="attendanceYes">出席</label></div>
+              <div class="choice"><input id="attendanceNo" type="radio" name="entry.1639911003" value="無法出席" /><label for="attendanceNo">無法出席</label></div>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="field-label" for="guestName">與會人（請填本名；多人請用頓號分隔） <span aria-hidden="true">*</span></label>
+            <input class="input" id="guestName" name="entry.175674604" type="text" autocomplete="name" maxlength="120" required />
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="guestCount">人數（包含本人；無法出席請選 0） <span aria-hidden="true">*</span></label>
+            <select class="select" id="guestCount" required>
+              <option value="" selected disabled>請選擇人數</option>
+              <option value="0">0 位（無法出席）</option>
+              <option value="1">1 位</option><option value="2">2 位</option><option value="3">3 位</option><option value="4">4 位</option><option value="5">5 位</option>
+              <option value="6">6 位</option><option value="7">7 位</option><option value="8">8 位</option><option value="9">9 位</option><option value="10">10 位</option>
+            </select>
+            <input type="hidden" id="guestCountEntry" name="entry.1323287344" value="" />
+          </div>
+
+          <fieldset class="choice-fieldset">
+            <legend class="field-label">需不需要紙本喜帖 <span aria-hidden="true">*</span></legend>
+            <div class="choice-row">
+              <div class="choice"><input id="paperInviteYes" type="radio" name="entry.1617913882" value="需要" required /><label for="paperInviteYes">需要</label></div>
+              <div class="choice"><input id="paperInviteNo" type="radio" name="entry.1617913882" value="不需要" /><label for="paperInviteNo">不需要</label></div>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="field-label" for="guestMessage">留言 <span style="letter-spacing:0">（選填）</span></label>
+            <textarea class="textarea" id="guestMessage" name="entry.279393895" maxlength="1000"></textarea>
+          </div>
+
+          <button class="submit-button" id="rsvpSubmit" type="submit">送出回覆</button>
+          <p class="form-message" id="rsvpMessage" role="status" aria-live="polite"></p>
+        </form>
+        <iframe class="rsvp-response-frame" name="rsvpResponse" title="RSVP 回覆送出狀態" tabindex="-1" aria-hidden="true"></iframe>
+        <p class="rsvp-fallback">若表單未能送出，<a href="https://docs.google.com/forms/d/e/1FAIpQLSeIyhm6-uqfvzfQV-Q-MwAjjD07-MJhRa3h5j4zuZwaIcqRjA/viewform" target="_blank" rel="noopener">可改用 Google 表單回覆</a></p>
       </div>
     </section>
   </main>
@@ -876,10 +946,12 @@
     }, { threshold: .12 });
     $$(".reveal").forEach(element => revealObserver.observe(element));
 
-    // 照片牆與放大檢視
+    // 照片預覽、展開相簿與放大檢視
     const galleryGrid = $("#galleryGrid");
+    const galleryExtra = $("#galleryExtra");
+    const galleryMore = $("#galleryMore");
     let activePhoto = 0;
-    PHOTO_URLS.forEach((url, index) => {
+    const makeGalleryItem = (url, index) => {
       const button = document.createElement("button");
       button.className = "gallery-item";
       button.type = "button";
@@ -894,7 +966,18 @@
       };
       button.appendChild(image);
       button.addEventListener("click", () => openLightbox(index));
-      galleryGrid.appendChild(button);
+      return button;
+    };
+    PHOTO_URLS.forEach((url, index) => {
+      (index < 3 ? galleryGrid : galleryExtra).appendChild(makeGalleryItem(url, index));
+    });
+    galleryMore.addEventListener("click", () => {
+      const expanded = galleryMore.getAttribute("aria-expanded") === "true";
+      galleryMore.setAttribute("aria-expanded", String(!expanded));
+      galleryMore.setAttribute("aria-label", expanded ? "展開婚紗照片" : "收起婚紗照片");
+      galleryMore.querySelector(".gallery-more-label").textContent = expanded ? "MORE" : "LESS";
+      galleryMore.querySelector(".gallery-more-mark").textContent = expanded ? "＋" : "−";
+      galleryExtra.hidden = expanded;
     });
 
     const lightbox = $("#lightbox");
@@ -920,6 +1003,53 @@
       if (event.key === "Escape") closeLightbox();
       if (event.key === "ArrowLeft") moveLightbox(-1);
       if (event.key === "ArrowRight") moveLightbox(1);
+    });
+
+    // 自製風格 RSVP：由 Google Forms 接收回覆並寫入綁定的試算表。
+    const rsvpForm = $("#rsvpForm");
+    const rsvpFrame = $("iframe[name='rsvpResponse']");
+    const rsvpSubmit = $("#rsvpSubmit");
+    const rsvpMessage = $("#rsvpMessage");
+    const attendanceNo = $("#attendanceNo");
+    const guestCount = $("#guestCount");
+    const guestCountEntry = $("#guestCountEntry");
+    let rsvpPending = false;
+    let rsvpTimeout;
+    const showRsvpMessage = (message, kind) => {
+      rsvpMessage.textContent = message;
+      rsvpMessage.className = `form-message is-visible ${kind}`;
+    };
+    const syncAttendanceCount = () => {
+      if (attendanceNo.checked) {
+        guestCount.value = "0";
+        guestCount.disabled = true;
+      } else {
+        guestCount.disabled = false;
+        if (guestCount.value === "0") guestCount.value = "";
+      }
+    };
+    $$("input[name='entry.1639911003']", rsvpForm).forEach(input => input.addEventListener("change", syncAttendanceCount));
+    rsvpForm.addEventListener("submit", () => {
+      guestCountEntry.value = guestCount.value;
+      rsvpPending = true;
+      rsvpSubmit.disabled = true;
+      showRsvpMessage("正在送出回覆…", "info");
+      window.clearTimeout(rsvpTimeout);
+      rsvpTimeout = window.setTimeout(() => {
+        if (!rsvpPending) return;
+        rsvpPending = false;
+        rsvpSubmit.disabled = false;
+        showRsvpMessage("目前還沒有收到送出確認，請稍後再試，或使用下方 Google 表單回覆。", "error");
+      }, 15000);
+    });
+    rsvpFrame.addEventListener("load", () => {
+      if (!rsvpPending) return;
+      rsvpPending = false;
+      window.clearTimeout(rsvpTimeout);
+      rsvpSubmit.disabled = false;
+      rsvpForm.reset();
+      syncAttendanceCount();
+      showRsvpMessage("回覆已送出，謝謝你！", "success");
     });
 
   </script>
