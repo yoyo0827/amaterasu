@@ -982,7 +982,7 @@
       return button;
     };
     PHOTO_URLS.forEach((url, index) => {
-      (index < 2 ? galleryGrid : galleryExtra).appendChild(makeGalleryItem(url, index));
+      (index < 3 ? galleryGrid : galleryExtra).appendChild(makeGalleryItem(url, index));
     });
     galleryMore.addEventListener("click", () => {
       const expanded = galleryMore.getAttribute("aria-expanded") === "true";
