@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=LXGW+WenKai+TC:wght@300;400&family=M+PLUS+Rounded+1c:wght@300;400;500;600&family=Noto+Serif+TC:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=LXGW+WenKai+TC:wght@300;400&family=M+PLUS+Rounded+1c:wght@300;400;500;600&family=Noto+Serif+TC:wght@200;300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -311,7 +311,7 @@
     .section-inner { width: min(100%, 950px); margin: 0 auto; }
     .section-head { margin-bottom: 54px; text-align: center; }
     .eyebrow { margin: 0 0 10px; color: var(--blue-deep); font-family: var(--serif); font-size: 1.4rem; font-style: italic; letter-spacing: .12em; }
-    .section-title { margin: 0; font-family: var(--serif); font-size: clamp(1.9rem, 5vw, 3.35rem); font-style: italic; font-weight: 300; letter-spacing: .08em; line-height: 1.2; }
+    .section-title { margin: 0; font-family: var(--serif); font-size: clamp(1.9rem, 5vw, 3.35rem); font-style: italic; font-weight: 300; letter-spacing: .08em; line-height: 1.2; } .schedule .section-title { font-weight: 500; }
     .rule { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 21px; color: var(--blue); }
     .rule i { width: 52px; height: 1px; background: currentColor; opacity: .5; }
     .rule span { font-family: var(--serif); font-size: 1.1rem; }
@@ -523,7 +523,7 @@
       padding: 45px 24px 70px;
       background:
         linear-gradient(rgba(244,239,232,.2), rgba(244,239,232,.08) 58%, rgba(39,49,58,.14)),
-        url("images/IMG_8472.jpeg") center 58% / cover no-repeat;
+        url("images/cover.jpg") center 58% / cover no-repeat;
       --ribbon-scale: 1;
       --ribbon-y: -47%;
       --ribbon-opacity: .78;
@@ -549,7 +549,7 @@
       display: flex;
       margin-bottom: 28px;
       color: #8fa3b5;
-      font-family: "Bodoni Moda", "Cormorant Garamond", serif;
+      font-family: var(--serif);
       font-size: clamp(.85rem, 1.8vw, 1.15rem);
       font-style: italic;
       font-weight: 400;
@@ -560,7 +560,7 @@
       position: relative;
       z-index: 2;
       color: #8fa3b5;
-      font-family: "Bodoni Moda", "Cormorant Garamond", serif;
+      font-family: var(--serif);
       font-size: clamp(2.55rem, 8.2vw, 7rem);
       font-weight: 400;
       letter-spacing: .21em;
@@ -982,7 +982,7 @@
       return button;
     };
     PHOTO_URLS.forEach((url, index) => {
-      (index < 3 ? galleryGrid : galleryExtra).appendChild(makeGalleryItem(url, index));
+      (index < 2 ? galleryGrid : galleryExtra).appendChild(makeGalleryItem(url, index));
     });
     galleryMore.addEventListener("click", () => {
       const expanded = galleryMore.getAttribute("aria-expanded") === "true";
