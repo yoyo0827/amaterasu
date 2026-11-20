@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=LXGW+WenKai+TC:wght@300;400&family=M+PLUS+Rounded+1c:wght@300;400;500;600&family=Noto+Serif+TC:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=LXGW+WenKai+TC:wght@300;400&family=M+PLUS+Rounded+1c:wght@300;400;500;600&family=Noto+Serif+TC:wght@200;300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -311,18 +311,24 @@
     .section-inner { width: min(100%, 950px); margin: 0 auto; }
     .section-head { margin-bottom: 54px; text-align: center; }
     .eyebrow { margin: 0 0 10px; color: var(--blue-deep); font-family: var(--serif); font-size: 1.4rem; font-style: italic; letter-spacing: .12em; }
-    .section-title { margin: 0; font-family: var(--tc); font-size: clamp(1.7rem, 4vw, 2.8rem); font-weight: 200; letter-spacing: .2em; line-height: 1.5; }
+    .section-title { margin: 0; font-family: var(--serif); font-size: clamp(1.9rem, 5vw, 3.35rem); font-style: italic; font-weight: 300; letter-spacing: .08em; line-height: 1.2; }
+    .schedule .section-title { font-weight: 500; }
     .rule { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 21px; color: var(--blue); }
     .rule i { width: 52px; height: 1px; background: currentColor; opacity: .5; }
     .rule span { font-family: var(--serif); font-size: 1.1rem; }
     .copy { color: var(--muted); font-family: var(--tc); font-size: .91rem; line-height: 2.2; }
 
     .story { background: var(--paper-deep); }
-    .couple-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 30px; }
-    .person { padding: 25px; text-align: center; }
+    .couple-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 30px; }
+    .person { padding: 18px; text-align: center; }
+    .person-frame { position: relative; width: min(100%, 300px); aspect-ratio: 4 / 5; margin: 0 auto 25px; border: 1px solid rgba(100,119,137,.38); padding: 10px; background: var(--white); box-shadow: 0 16px 38px rgba(39,49,58,.13); }
+    .person-frame::after { content: ""; position: absolute; inset: 6px; border: 1px solid rgba(100,119,137,.22); pointer-events: none; }
+    .person-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+    .person.from-left .person-frame { transform: rotate(-1.2deg); }
+    .person.from-right .person-frame { transform: rotate(1.2deg); }
     .person-role { color: var(--blue-deep); font-family: var(--serif); font-size: 1.1rem; font-style: italic; letter-spacing: .16em; }
-    .person-name { margin: 7px 0 18px; font-family: var(--tc); font-size: 1.35rem; font-weight: 300; letter-spacing: .22em; }
-    .person .copy { margin: 0; }
+    .person-name { margin: 7px 0 14px; font-family: var(--serif); font-size: 1.7rem; font-style: italic; font-weight: 400; letter-spacing: .08em; }
+    .person .copy { max-width: 330px; margin: 0 auto; color: var(--muted); font-family: var(--serif); font-size: 1.25rem; font-style: italic; line-height: 1.75; }
     .heart { color: var(--blue); font-family: var(--serif); font-size: 4rem; font-weight: 300; opacity: .65; }
 
     .venue { background: var(--white); }
@@ -427,8 +433,9 @@
     .choice input:checked + label { border-color: var(--blue); color: var(--white); background: var(--blue); }
     .choice input:focus-visible + label { outline: 2px solid var(--blue-deep); outline-offset: 2px; }
     .select-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
-    .address-field { overflow: hidden; max-height: 0; margin: 0; opacity: 0; transition: max-height .4s, opacity .4s, margin .4s; }
-    .address-field.is-visible { max-height: 100px; margin-top: 12px; opacity: 1; }
+    .address-field { overflow: hidden; max-height: 0; margin: 0; opacity: 0; visibility: hidden; pointer-events: none; transition: max-height .4s, opacity .4s, margin .4s, visibility .4s; }
+    .address-field.is-visible { max-height: 180px; margin: 12px 0 24px; opacity: 1; visibility: visible; pointer-events: auto; }
+    .field-hint { display: block; margin-top: 6px; color: var(--muted); font-size: .72rem; line-height: 1.6; }
     .submit-button { width: 100%; border: 1px solid var(--blue-deep); padding: 13px; color: var(--white); background: var(--blue-deep); cursor: pointer; font-size: .7rem; letter-spacing: .25em; transition: background .3s, color .3s; }
     .submit-button:hover:not(:disabled) { color: var(--blue-deep); background: transparent; }
     .submit-button:disabled { cursor: wait; opacity: .55; }
@@ -474,6 +481,9 @@
       .nav-links a { font-size: .8rem; }
       section { padding: 84px 20px; }
       .couple-grid, .venue-grid { grid-template-columns: 1fr; gap: 10px; }
+      .couple-grid { gap: 18px; }
+      .person { padding: 10px 0; }
+      .person-frame { width: min(72vw, 280px); }
       .heart { line-height: .5; }
       .map-card { min-height: 270px; }
       .timeline::before { left: 70px; }
@@ -514,7 +524,7 @@
       padding: 45px 24px 70px;
       background:
         linear-gradient(rgba(244,239,232,.2), rgba(244,239,232,.08) 58%, rgba(39,49,58,.14)),
-        url("images/IMG_8465.jpeg") center 58% / cover no-repeat;
+        url("images/cover.jpg") center 58% / cover no-repeat;
       --ribbon-scale: 1;
       --ribbon-y: -47%;
       --ribbon-opacity: .78;
@@ -540,7 +550,7 @@
       display: flex;
       margin-bottom: 28px;
       color: #8fa3b5;
-      font-family: "Bodoni Moda", "Cormorant Garamond", serif;
+      font-family: var(--serif);
       font-size: clamp(.85rem, 1.8vw, 1.15rem);
       font-style: italic;
       font-weight: 400;
@@ -551,7 +561,7 @@
       position: relative;
       z-index: 2;
       color: #8fa3b5;
-      font-family: "Bodoni Moda", "Cormorant Garamond", serif;
+      font-family: var(--serif);
       font-size: clamp(2.55rem, 8.2vw, 7rem);
       font-weight: 400;
       letter-spacing: .21em;
@@ -631,7 +641,12 @@
       "images/IMG_8459.jpeg",
       "images/IMG_8460.jpeg",
       "images/IMG_8461.jpeg",
-      "images/IMG_8463.jpeg"
+      "images/IMG_8463.jpeg",
+      "images/IMG_8471.jpeg",
+      "images/IMG_8470.jpeg",
+      "images/IMG_8469.jpeg",
+      "images/IMG_8468.jpeg",
+      "images/IMG_8467.jpeg"
     ];
 
     const WEDDING_DATE = "2027-03-20T12:00:00+08:00";
@@ -693,20 +708,22 @@
       <div class="section-inner">
         <div class="section-head reveal">
           <p class="eyebrow">Our Story</p>
-          <h2 class="section-title">新郎 &amp; 新娘</h2>
+          <h2 class="section-title">The Two of Us</h2>
           <div class="rule"><i></i><span>✦</span><i></i></div>
         </div>
         <div class="couple-grid">
           <article class="person reveal from-left">
+            <div class="person-frame"><img class="person-photo" src="profile-groom.jpg" alt="Guanyou in a black suit among the trees" loading="lazy" /></div>
             <div class="person-role">Groom</div>
             <h3 class="person-name">陳冠佑</h3>
-            <p class="copy">喜歡研究生活裡的小事，<br />也喜歡把平凡的日子過成值得收藏的回憶。</p>
+            <p class="copy">Still noticing the good in the quiet moments.</p>
           </article>
           <div class="heart reveal">♡</div>
           <article class="person reveal from-right">
+            <div class="person-frame"><img class="person-photo" src="profile-bride.jpg" alt="Yixin in her wedding dress with a bouquet" loading="lazy" /></div>
             <div class="person-role">Bride</div>
             <h3 class="person-name">楊頤昕</h3>
-            <p class="copy">喜歡花、旅行與溫柔的日常，<br />最喜歡的風景，是身邊剛好有你。</p>
+            <p class="copy">You make even the simplest days feel like my favorite ones.</p>
           </article>
         </div>
       </div>
@@ -715,8 +732,7 @@
     <section class="venue" id="venue">
       <div class="section-inner">
         <div class="section-head reveal">
-          <p class="eyebrow">Location</p>
-          <h2 class="section-title">婚禮地點</h2>
+          <h2 class="section-title">Location</h2>
           <div class="rule"><i></i><span>✦</span><i></i></div>
         </div>
         <div class="venue-grid">
@@ -742,8 +758,7 @@
     <section class="schedule" id="schedule">
       <div class="section-inner">
         <div class="section-head reveal">
-          <p class="eyebrow">The Day</p>
-          <h2 class="section-title">當天流程</h2>
+          <h2 class="section-title">The Day</h2>
           <div class="rule"><i></i><span>✦</span><i></i></div>
         </div>
         <div class="time-summary reveal" aria-label="婚禮重要時間">
@@ -762,8 +777,7 @@
     <section class="dress" id="dresscode">
       <div class="section-inner">
         <div class="section-head reveal">
-          <p class="eyebrow">Dress Code</p>
-          <h2 class="section-title">穿著建議</h2>
+          <h2 class="section-title">Dress Code</h2>
           <div class="rule"><i></i><span>✦</span><i></i></div>
         </div>
         <p class="dress-copy copy reveal">歡迎你以白色、咖啡色或淺藍色系穿著出席，讓我們一起留下柔和、明亮又溫暖的婚禮記憶。當然，穿自己最自在的樣子也很好。</p>
@@ -779,8 +793,7 @@
       <div class="section-inner">
         <div class="gallery-head reveal">
           <div class="section-head">
-            <p class="eyebrow">Engagement Photos</p>
-            <h2 class="section-title">婚紗照片</h2>
+            <h2 class="section-title">Engagement Photos</h2>
             <div class="rule"><i></i><span>✦</span><i></i></div>
           </div>
           <p class="gallery-note">收下一些我們喜歡的日常<br />點開照片，可以慢慢看</p>
@@ -841,6 +854,12 @@
               <div class="choice"><input id="paperInviteNo" type="radio" name="entry.1617913882" value="不需要" /><label for="paperInviteNo">不需要</label></div>
             </div>
           </fieldset>
+
+          <div class="field address-field" id="addressField" aria-hidden="true">
+            <label class="field-label" for="guestAddress">紙本喜帖寄送地址 <span aria-hidden="true">*</span></label>
+            <input class="input" id="guestAddress" name="entry.2013797384" type="text" autocomplete="street-address" maxlength="250" disabled />
+            <small class="field-hint">選擇需要紙本喜帖時，請填寫完整收件地址。</small>
+          </div>
 
           <div class="field">
             <label class="field-label" for="guestMessage">留言 <span style="letter-spacing:0">（選填）</span></label>
@@ -969,7 +988,7 @@
       return button;
     };
     PHOTO_URLS.forEach((url, index) => {
-      (index < 3 ? galleryGrid : galleryExtra).appendChild(makeGalleryItem(url, index));
+      (index < 2 ? galleryGrid : galleryExtra).appendChild(makeGalleryItem(url, index));
     });
     galleryMore.addEventListener("click", () => {
       const expanded = galleryMore.getAttribute("aria-expanded") === "true";
@@ -1013,6 +1032,9 @@
     const attendanceNo = $("#attendanceNo");
     const guestCount = $("#guestCount");
     const guestCountEntry = $("#guestCountEntry");
+    const paperInviteYes = $("#paperInviteYes");
+    const addressField = $("#addressField");
+    const guestAddress = $("#guestAddress");
     let rsvpPending = false;
     let rsvpTimeout;
     const showRsvpMessage = (message, kind) => {
@@ -1028,7 +1050,19 @@
         if (guestCount.value === "0") guestCount.value = "";
       }
     };
+    const syncAddressField = () => {
+      const needsPaperInvite = paperInviteYes.checked;
+      addressField.classList.toggle("is-visible", needsPaperInvite);
+      addressField.setAttribute("aria-hidden", String(!needsPaperInvite));
+      guestAddress.disabled = !needsPaperInvite;
+      guestAddress.required = needsPaperInvite;
+      if (!needsPaperInvite) guestAddress.value = "";
+    };
     $$("input[name='entry.1639911003']", rsvpForm).forEach(input => input.addEventListener("change", syncAttendanceCount));
+    rsvpForm.addEventListener("change", event => {
+      if (event.target.matches("input[name='entry.1617913882']")) syncAddressField();
+    });
+    syncAddressField();
     rsvpForm.addEventListener("submit", () => {
       guestCountEntry.value = guestCount.value;
       rsvpPending = true;
@@ -1049,6 +1083,7 @@
       rsvpSubmit.disabled = false;
       rsvpForm.reset();
       syncAttendanceCount();
+      syncAddressField();
       showRsvpMessage("回覆已送出，謝謝你！", "success");
     });
 
